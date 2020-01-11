@@ -1,0 +1,15 @@
+{
+    "name": "phill/torrent-health-frontend",
+    "type": "project",
+    "require": {
+        "symfony/dotenv": "^5.1@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "phillmac",
+            "email": "phillmac@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
