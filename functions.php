@@ -1,6 +1,11 @@
 <?php
 require('vendor/autoload.php');
 
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/.env');
+
 function upstreamAddress () {
     return $_ENV['UPSTREAM_ADDR'];
 }
