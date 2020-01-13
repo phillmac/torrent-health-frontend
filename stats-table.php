@@ -5,8 +5,6 @@
 
     $handle = fopen($address, 'r');
 
-    header('Content-Type: application/json; charset=utf-8');
-
     if ( !$handle ) {
         http_response_code(500);
     }  else {
