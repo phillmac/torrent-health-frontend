@@ -9,14 +9,12 @@
     if ( !$handle ) {
         http_response_code(500);
     }  else {
-        $torrents = array_map(formatTorrent, json_decode(stream_get_contents($handle)));
-        echo json_encode($torrents);
 
-    $unfiltered = array_map(formatTorrent,json_decode(stream_get_contents($handle)));
+        $unfiltered = array_map(formatTorrent,json_decode(stream_get_contents($handle)));
 
-    $torrents = array_filter(json_decode($unfiltered), function($t) {
-        return $t->seeders < 3 ;
-    });
+        $torrents = array_filter(json_decode($unfiltered), function($t) {
+            return $t->seeders < 3 ;
+        });
 
 ?>
 
