@@ -11,7 +11,6 @@
         http_response_code(500);
     }  else {
         $torrents = array_map(formatTorrent,json_decode(stream_get_contents($handle)));
-        echo json_encode($torrents);
 ?>
 
 <!DOCTYPE html>
