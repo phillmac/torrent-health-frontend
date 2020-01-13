@@ -12,7 +12,7 @@
 
         $unfiltered = array_map(formatTorrent,json_decode(stream_get_contents($handle)));
 
-        $torrents = array_filter(json_decode($unfiltered), function($t) {
+        $torrents = array_filter($unfiltered, function($t) {
             return $t->seeders < 3 ;
         });
 
