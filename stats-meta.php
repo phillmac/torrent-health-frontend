@@ -17,7 +17,7 @@ if ( !$handle ) {
 
     $oldest = min(array_map(function($t) {
         return $t->scraped_date;
-    }, $stale));
+    }, $torrents));
 
     $noseeds = array_filter($torrents, function($t) {
         return $t->seeders === 0 ;
