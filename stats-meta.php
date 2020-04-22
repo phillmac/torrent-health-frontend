@@ -15,7 +15,7 @@ if ( !$handle ) {
         return ($t->scraped_date + 10800) < time();
     });
 
-    $oldest = max(array_map(function($t) {
+    $oldest = min(array_map(function($t) {
         return $t->scraped_date;
     }, $stale));
 
