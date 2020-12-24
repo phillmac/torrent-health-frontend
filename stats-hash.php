@@ -4,7 +4,7 @@
     $address = upstreamAddress('HASH');
     $handle = FALSE;
 
-    if (isset($_GET['infohash'])) {
+    if (isset($_GET['hash'])) {
         $handle = jsonGet($address, json_encode(array('hash' => $_GET['hash'])));
     }
     else {
