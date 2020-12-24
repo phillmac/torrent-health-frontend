@@ -8,7 +8,7 @@
     if ( !$handle ) {
         http_response_code(500);
     }  else {
-        $torrents = array_map(formatTorrent,json_decode(stream_get_contents($handle)));
+        $torrents = array_map('formatTorrent',json_decode(stream_get_contents($handle)));
 ?>
 
 <!DOCTYPE html>
