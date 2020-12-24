@@ -1,7 +1,7 @@
 <?php
     require('functions.php');
 
-    $address = upstreamAddress();
+    $address = upstreamAddress('HASH');
     $handle = FALSE;
 
     $handle = jsonGet($address, json_encode(array('hash' => $_GET['infohash'])));

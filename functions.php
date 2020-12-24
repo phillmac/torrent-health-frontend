@@ -11,7 +11,7 @@ function upstreamAddress ($addrType=null) {
         return $_ENV['UPSTREAM_ADDR'];
     }
 
-    return $_ENV[$addrType];
+    return $_ENV['UPSTREAM_ADDR' . $addrType];
 }
 
 function formatBytes($bytes, $precision = 2) {
