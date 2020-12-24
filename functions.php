@@ -71,5 +71,5 @@ function jsonGet ($address, $data) {
             )
         );
     $context = stream_context_create($context_options);
-    return fopen($address, 'r',, $context);
+    return fopen($address, 'r', false, $context);
 }
