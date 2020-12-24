@@ -6,8 +6,12 @@ use Symfony\Component\Dotenv\Dotenv;
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/.env');
 
-function upstreamAddress () {
-    return $_ENV['UPSTREAM_ADDR'];
+function upstreamAddress ($addrType=null) {
+    if (is_null($addrType)) {
+        return $_ENV['UPSTREAM_ADDR'];
+    }
+
+    return $_ENV[$addrType];
 }
 
 function formatBytes($bytes, $precision = 2) {
@@ -55,4 +59,17 @@ function secondsToTime($seconds) {
     $dtF = new \DateTime('@0');
     $dtT = new \DateTime("@$seconds");
     return $dtF->diff($dtT)->format('%a d, %h h, %i m');
+}
+
+function jsonGet ($address, $data) {
+    $context_options = array (
+        'http' => array (
+            'method' => 'GET',
+            'header'=> "Content-type: application/json\r\n"
+                . "Content-Length: " . strlen($data) . "\r\n",
+            'content' => $data
+            )
+        );
+    $context = stream_context_create($context_options);
+    return fopen($address, 'r', $context);
 }
