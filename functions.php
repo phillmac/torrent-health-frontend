@@ -4,9 +4,10 @@ require('vendor/autoload.php');
 use Symfony\Component\Dotenv\Dotenv;
 
 $dotenv = new Dotenv();
-$dotenv->load(__DIR__.'/.env');
+$dotenv->load(__DIR__ . '/.env');
 
-function upstreamAddress ($addrType=null) {
+function upstreamAddress($addrType = null)
+{
     if (is_null($addrType)) {
         return $_ENV['UPSTREAM_ADDR'];
     }
@@ -14,7 +15,8 @@ function upstreamAddress ($addrType=null) {
     return $_ENV['UPSTREAM_ADDR_' . $addrType];
 }
 
-function formatBytes($bytes, $precision = 2) {
+function formatBytes($bytes, $precision = 2)
+{
     $units = array('B', 'KB', 'MB', 'GB', 'TB');
 
     $bytes = max($bytes, 0);
@@ -28,14 +30,15 @@ function formatBytes($bytes, $precision = 2) {
     return round($bytes, $precision) . ' ' . $units[$pow];
 }
 
-function formatTorrent($t) {
+function formatTorrent($t)
+{
     $seeders = -1;
     $leechers = -1;
     $completed = -1;
     $scraped_date = -1;
-    forEach ($t->trackerData as $data) {
-        if ($data->scraped_date > time() - 86400 *100){
-            if($data->complete > $seeders) {
+    foreach ($t->trackerData as $data) {
+        if ($data->scraped_date > time() - 86400 * 100) {
+            if ($data->complete > $seeders) {
                 $seeders = $data->complete;
                 $leechers = $data->incomplete;
                 $completed = $data->downloaded;
@@ -54,25 +57,27 @@ function formatTorrent($t) {
     unset($t->trackers);
     unset($t->trackerData);
     unset($t->dhtData);
-return $t;
+    return $t;
 }
 
 
-function secondsToTime($seconds) {
+function secondsToTime($seconds)
+{
     $dtF = new \DateTime('@0');
     $dtT = new \DateTime("@$seconds");
     return $dtF->diff($dtT)->format('%a d, %h h, %i m');
 }
 
-function jsonGet ($address, $data) {
-    $context_options = array (
-        'http' => array (
+function jsonGet($address, $data)
+{
+    $context_options = array(
+        'http' => array(
             'method' => 'GET',
-            'header'=> "Content-type: application/json\r\n"
+            'header' => "Content-type: application/json\r\n"
                 . "Content-Length: " . strlen($data) . "\r\n",
             'content' => $data
-            )
-        );
+        )
+    );
     $context = stream_context_create($context_options);
     return fopen($address, 'r', false, $context);
 }
