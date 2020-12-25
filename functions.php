@@ -34,11 +34,13 @@ function formatTorrent($t) {
     $completed = -1;
     $scraped_date = -1;
     forEach ($t->trackerData as $data) {
-        if($data->complete > $seeders) {
-            $seeders = $data->complete;
-            $leechers = $data->incomplete;
-            $completed = $data->downloaded;
-            $scraped_date = $data->scraped_date;
+        if ($data->scraped_date > time() - 86400 *100){
+            if($data->complete > $seeders) {
+                $seeders = $data->complete;
+                $leechers = $data->incomplete;
+                $completed = $data->downloaded;
+                $scraped_date = $data->scraped_date;
+            }
         }
     }
     $t->infohash = $t->_id;
@@ -54,6 +56,7 @@ function formatTorrent($t) {
     unset($t->dhtData);
 return $t;
 }
+
 
 function secondsToTime($seconds) {
     $dtF = new \DateTime('@0');
