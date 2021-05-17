@@ -16,7 +16,15 @@
                 function($t) {
                     return $t->infohash; 
                 },
-                getStale($handle)
+                usort(
+                    getStale($handle),
+                    function($a, $b) {
+                        if ($a->scraped_date == $b->scraped_date) {
+                            return 0;
+                        }
+                        return ($a->scraped_date < $b->scraped_date) ? -1 : 1;
+                    }
+                )
             )
         );
     }
