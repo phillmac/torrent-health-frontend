@@ -34,7 +34,7 @@ function formatTorrent($t)
 {
     $seeders = -1;
     $leechers = -1;
-    $completed = -1;
+    //$completed = -1;
     $scraped_date = -1;
     foreach ($t->trackerData as $data) {
         if ($data->scraped_date > time() - 86400 * 100) {
@@ -49,7 +49,7 @@ function formatTorrent($t)
     $t->infohash = $t->_id;
     $t->seeders = $seeders;
     $t->leechers = $leechers;
-    $t->completed = $completed;
+    // $t->completed = $completed;
     $t->scraped_date = $scraped_date;
     $t->dht_peers = $t->dhtData->peers;
     $t->dht_scraped = $t->dhtData->scraped_date;
