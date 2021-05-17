@@ -41,7 +41,7 @@ function formatTorrent($t)
             if ($data->complete > $seeders) {
                 $seeders = $data->complete;
                 $leechers = $data->incomplete;
-                $completed = $data->downloaded;
+                // $completed = $data->downloaded;
                 $scraped_date = $data->scraped_date;
             }
         }
