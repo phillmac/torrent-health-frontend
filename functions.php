@@ -81,3 +81,11 @@ function jsonGet($address, $data)
     $context = stream_context_create($context_options);
     return fopen($address, 'r', false, $context);
 }
+
+function getStale ($handle, $max_age=10800) {
+    return array_filter (
+        array_map('formatTorrent', json_decode(stream_get_contents($handle))),
+        function($t) {
+            return ($t->scraped_date + $max_age) < time();
+    });
+}
