@@ -16,15 +16,19 @@
                 function($t) {
                     return $t->infohash; 
                 },
-                usort(
-                    getStale($handle),
-                    function($a, $b) {
-                        if ($a->scraped_date == $b->scraped_date) {
-                            return 0;
+                call_user_func(function(array $st){
+                    usort(
+                        $st,
+                        function($a, $b) {
+                            if ($a->scraped_date == $b->scraped_date) {
+                                return 0;
+                            }
+                            return ($a->scraped_date < $b->scraped_date) ? -1 : 1;
                         }
-                        return ($a->scraped_date < $b->scraped_date) ? -1 : 1;
-                    }
-                )
+                    );
+                    return $st;
+                },
+                getStale($handle))
             )
         );
     }
