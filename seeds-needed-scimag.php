@@ -18,7 +18,7 @@
                 )
             ),
             function($t) {
-                return $t->seeders < 3 ;
+                return  $t->type == 'scimag' && $t->seeders < 3 ;
             }
     );
 
