@@ -10,6 +10,12 @@
     if ( !$handle ) {
         echo '{"status": "error"}';
     }  else {
-        $torrents = array_map(formatTorrent,json_decode(stream_get_contents($handle)));
-        echo json_encode($torrents);
+        echo json_encode(
+            array_map(
+                'formatTorrent',
+                json_decode(
+                    stream_get_contents($handle)
+                )
+            )
+        );
     }
