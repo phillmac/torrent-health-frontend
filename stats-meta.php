@@ -18,12 +18,12 @@ if ( !$handle ) {
     });
     $now = time();
     $ages = array_map(function($t) {
-        return $now - $t->scraped_date;
+        return $t->scraped_date;
     }, $torrents);
 
-    $oldest = max($ages);
+    $oldest = min($ages);
 
-    $percentile_age = intval(Descriptive::percentile($ages, 95));
+    $percentile_age = intval(Descriptive::percentile($ages, 5));
 
     $noseeds = array_filter($torrents, function($t) {
         return $t->seeders === 0 ;
@@ -46,8 +46,8 @@ if ( !$handle ) {
         <h1>Torrent Health Tracker</h1>
         <h2>Updated: <?= (new \DateTime())->format('Y-m-d H:i:s e'); ?></h2>
         <p>Stale count: <?= count($stale); ?></p>
-        <p>Oldest: <?= secondsToTime($oldest); ?></p>
-        <p>(95% Age): <?= secondsToTime($percentile_age); ?></p>
+        <p>Oldest: <?= secondsToTime($now - $oldest); ?></p>
+        <p>(95% Age): <?= secondsToTime($now - $percentile_age); ?></p>
         <p>No seeders: <?= count($noseeds); ?></p>
         <p>No leechers: <?= count($noleechers); ?></p>
         <p>Weakly seeded (< 3 seeds): <?= count($weaklyseeded); ?></p>
