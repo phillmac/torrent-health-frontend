@@ -185,7 +185,7 @@ function buildFilters()
         } else {
             $filter->value = $values[0];
         }
-        return array_push($filter_list, $filter);
+        array_push($filter_list, $filter);
     }
     return $filter_list;
 }
