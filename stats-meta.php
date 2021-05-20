@@ -46,8 +46,8 @@ if ( !$handle ) {
         <h1>Torrent Health Tracker</h1>
         <h2>Updated: <?= (new \DateTime())->format('Y-m-d H:i:s e'); ?></h2>
         <p>Stale count: <?= count($stale); ?></p>
-        <p>Oldest: <?= secondsToTime(time() - $oldest); ?></p>
-        <p>(95% Age): <?= secondsToTime(time() - $percentile_age); ?></p>
+        <p>Oldest: <?= secondsToTime($oldest); ?></p>
+        <p>(95% Age): <?= secondsToTime($percentile_age); ?></p>
         <p>No seeders: <?= count($noseeds); ?></p>
         <p>No leechers: <?= count($noleechers); ?></p>
         <p>Weakly seeded (< 3 seeds): <?= count($weaklyseeded); ?></p>
