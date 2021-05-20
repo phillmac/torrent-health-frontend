@@ -169,7 +169,7 @@ function buildFilters()
     if (!is_array($values)) {
         $values = [$values];
     }
-    $filter_list = arary();
+    $filter_list = [];
 
     while ($propname = array_shift($propnames)) {
         $filter = new stdClass();
