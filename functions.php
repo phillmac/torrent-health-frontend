@@ -122,11 +122,11 @@ function getFiltered ($handle, string $propname, string $comp, $value) {
         http_response_code(400);
         return 'Invalid propertyname';
     }
-
+    $compare = $comparisons[$comp];
     return array_filter (
         array_map('formatTorrent', json_decode(stream_get_contents($handle))),
-        function($t) use ($comparisons, $propname, $value) {
-            return $comparisons[$comp]($t->{$propname}, $value);
+        function($t) use ($compare, $propname, $value) {
+            return $compare($t->{$propname}, $value);
         }
     ); 
 }
