@@ -23,7 +23,7 @@ if ( !$handle ) {
 
     $oldest = max($ages);
 
-    $percentile_age = Descriptive::percentile($ages, 95);
+    $percentile_age = intval(Descriptive::percentile($ages, 95));
 
     $noseeds = array_filter($torrents, function($t) {
         return $t->seeders === 0 ;
