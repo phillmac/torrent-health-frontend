@@ -1,5 +1,7 @@
 <?php
 
+use MathPHP\Statistics\Descriptive;
+
 require('functions.php');
 $address = upstreamAddress();
 $handle = FALSE;
@@ -14,14 +16,14 @@ if ( !$handle ) {
     $stale = array_filter ($torrents, function($t) {
         return ($t->scraped_date + 10800) < time();
     });
+    $now = time();
+    $ages = array_map(function($t) {
+        return $now - $t->scraped_date;
+    }, $torrents);
 
-    $oldest = min(array_map(function($t) {
-        return $t->scraped_date;
-    }, $torrents));
+    $oldest = max($ages);
 
-    $percentile_age = stats_stat_percentile(array_map(function($t) {
-        return $t->scraped_date;
-    }, $torrents), 95);
+    $percentile_age = Descriptive::percentile($ages, 95);
 
     $noseeds = array_filter($torrents, function($t) {
         return $t->seeders === 0 ;

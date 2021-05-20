@@ -2,7 +2,8 @@
     "name": "phill/torrent-health-frontend",
     "type": "project",
     "require": {
-        "symfony/dotenv": "^5.1@dev"
+        "symfony/dotenv": "^5.1@dev",
+        "markrogoyski/math-php": "dev-master"
     },
     "license": "MIT",
     "authors": [
