@@ -125,7 +125,7 @@ function getFiltered ($handle, string $propname, string $comp, $value) {
 
     return array_filter (
         array_map('formatTorrent', json_decode(stream_get_contents($handle))),
-        function($t) {
+        function($t) use ($comparisons, $propname, $value) {
             return $comparisons[$comp]($t->{$propname}, $value);
         }
     ); 
