@@ -110,7 +110,8 @@ function getFiltered ($handle, string $propname, string $comp, $value) {
         'leechers',
         'scraped_date',
         'dht_peers',
-        'dht_scraped'
+        'dht_scraped',
+        'type'
     ];
 
     if (! array_key_exists($comp, $comparisons)) {
