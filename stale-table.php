@@ -8,11 +8,7 @@
     if ( !$handle ) {
         http_response_code(500);
     }  else {
-        $torrents = array_filter (
-            array_map('formatTorrent', json_decode(stream_get_contents($handle))),
-            function($t) {
-                return ($t->scraped_date + 10800) < time();
-        });
+        $torrents = getStale($handle);
 ?>
 
 <!DOCTYPE html>
