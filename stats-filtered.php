@@ -12,10 +12,9 @@
         json_encode(array('status' => 'error'));
     }  else {
         echo json_encode(
-            getFiltered($handle, 
-                $_REQUEST['propname'],
-                $_REQUEST['comp'],
-                $_REQUEST['value']
+            getFiltered(
+                handleGetFormatted($handle),
+                buildFilters()
             )
         );
     }

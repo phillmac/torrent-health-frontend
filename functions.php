@@ -1,23 +1,23 @@
 <?php
-require('vendor/autoload.php');
+require "vendor/autoload.php";
 
 use Symfony\Component\Dotenv\Dotenv;
 
 $dotenv = new Dotenv();
-$dotenv->load(__DIR__ . '/.env');
+$dotenv->load(__DIR__ . "/.env");
 
 function upstreamAddress($addrType = null)
 {
     if (is_null($addrType)) {
-        return $_ENV['UPSTREAM_ADDR'];
+        return $_ENV["UPSTREAM_ADDR"];
     }
 
-    return $_ENV['UPSTREAM_ADDR_' . $addrType];
+    return $_ENV["UPSTREAM_ADDR_" . $addrType];
 }
 
 function formatBytes($bytes, $precision = 2)
 {
-    $units = array('B', 'KB', 'MB', 'GB', 'TB');
+    $units = ["B", "KB", "MB", "GB", "TB"];
 
     $bytes = max($bytes, 0);
     $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
@@ -27,7 +27,7 @@ function formatBytes($bytes, $precision = 2)
     $bytes /= pow(1024, $pow);
     // $bytes /= (1 << (10 * $pow));
 
-    return round($bytes, $precision) . ' ' . $units[$pow];
+    return round($bytes, $precision) . " " . $units[$pow];
 }
 
 function formatTorrent($t)
@@ -60,75 +60,155 @@ function formatTorrent($t)
     return $t;
 }
 
-
 function secondsToTime($seconds)
 {
-    $dtF = new \DateTime('@0');
+    $dtF = new \DateTime("@0");
     $dtT = new \DateTime("@$seconds");
-    return $dtF->diff($dtT)->format('%a d, %h h, %i m');
+    return $dtF->diff($dtT)->format("%a d, %h h, %i m");
 }
 
 function jsonGet($address, $data)
 {
-    $context_options = array(
-        'http' => array(
-            'method' => 'GET',
-            'header' => "Content-type: application/json\r\n"
-                . "Content-Length: " . strlen($data) . "\r\n",
-            'content' => $data
-        )
-    );
+    $context_options = [
+        "http" => [
+            "method" => "GET",
+            "header" =>
+                "Content-type: application/json\r\n" .
+                "Content-Length: " .
+                strlen($data) .
+                "\r\n",
+            "content" => $data,
+        ],
+    ];
     $context = stream_context_create($context_options);
-    return fopen($address, 'r', false, $context);
+    return fopen($address, "r", false, $context);
 }
 
-function getStale ($handle, $max_age=10800) {
-    return array_filter (
-        array_map('formatTorrent', json_decode(stream_get_contents($handle))),
-        function($t) {
-            return ($t->scraped_date + $max_age) < time();
+function getStale($handle, $max_age = 10800)
+{
+    return array_filter(
+        array_map("formatTorrent", json_decode(stream_get_contents($handle))),
+        function ($t) {
+            return $t->scraped_date + $max_age < time();
         }
     );
 }
 
-function getFiltered ($handle, $propname, $comp, $value) {
-    $comparisons = array (
-        '==' => function ($a,$b) {return $a==$b;},
-        '<=' => function ($a,$b) {return $a<=$b;},
-        '>=' => function ($a,$b) {return $a>=$b;},
-        '<' => function ($a,$b) {return $a<$b;},
-        '>' => function ($a,$b) {return $a>$b;},
-        '!=' => function ($a,$b) {return $a!=$b;},
-        '<>' => function ($a,$b) {return $a<>$b;},
-        '<=>' => function ($a,$b) {return $a<=>$b;},
-    );
-
-    $propnames = [
-        'infohash',
-        'seeders',
-        'leechers',
-        'scraped_date',
-        'dht_peers',
-        'dht_scraped',
-        'type',
-        'size_bytes',
-        'name'
+function applyFilter($items, $propname, $comp, $value)
+{
+    $comparisons = [
+        "==" => function ($a, $b) {
+            return $a == $b;
+        },
+        "<=" => function ($a, $b) {
+            return $a <= $b;
+        },
+        ">=" => function ($a, $b) {
+            return $a >= $b;
+        },
+        "<" => function ($a, $b) {
+            return $a < $b;
+        },
+        ">" => function ($a, $b) {
+            return $a > $b;
+        },
+        "!=" => function ($a, $b) {
+            return $a != $b;
+        },
+        "<>" => function ($a, $b) {
+            return $a != $b;
+        },
+        "<=>" => function ($a, $b) {
+            return $a <=> $b;
+        },
     ];
 
-    if (! array_key_exists($comp, $comparisons)) {
+    $propnames = [
+        "infohash",
+        "seeders",
+        "leechers",
+        "scraped_date",
+        "dht_peers",
+        "dht_scraped",
+        "type",
+        "size_bytes",
+        "name",
+    ];
+
+    if (!array_key_exists($comp, $comparisons)) {
         http_response_code(400);
-        return 'Invalid comparison';
+        throw new Exception("Invalid comparison");
     }
 
-    if (! in_array($propname, $propnames)) {
+    if (!in_array($propname, $propnames)) {
         http_response_code(400);
-        return 'Invalid propertyname';
+        throw new Exception("Invalid propertyname");
     }
     $compare = $comparisons[$comp];
-    return array_filter (
-        array_map('formatTorrent', json_decode(stream_get_contents($handle))),
-        function($t) use ($compare, $propname, $value) {
-            return $compare($t->{$propname}, $value);
-        }
-    ); 
+    return array_filter($items, function ($t) use (
+        $compare,
+        $propname,
+        $value
+    ) {
+        return $compare($t->{$propname}, $value);
+    });
+}
+
+function buildFilters()
+{
+    $propnames = $_REQUEST["propname"];
+    $comps = $_REQUEST["comp"];
+    $values = $_REQUEST["value"];
+
+    if (!is_array($propnames)) {
+        $propnames = [$propnames];
+    }
+    if (!is_array($comps)) {
+        $comps = [$comps];
+    }
+    if (!is_array($values)) {
+        $values = [$values];
+    }
+
+    return array_map(
+        function ($propname) use($comps, $values) {
+            $filter = new stdClass;
+            $filter->propname = $propname;
+
+            if (count($comps) > 1 ) {
+                $filter->comp = array_shift($comps);
+            } else {
+                $filter->comp = $comps[0];
+            }
+            if (count($values) > 1 ) {
+                $filter->value = array_shift($values);
+            } else {
+                $filter->values = $values[0];
+            }
+            return $filter;
+        },
+        $propnames
+    );
+}
+
+function getFiltered($items, $filters)
+{
+    while ($filter_item = array_pop($filters)) {
+        $items = applyFilter(
+            $items,
+            $filter_item->propname,
+            $filter_item->comp,
+            $filter_item->value
+        );
+    }
+
+    return $items;
+}
+
+function handleGetFormatted($handle)
+{
+    return array_map(
+        "formatTorrent",
+        json_decode(stream_get_contents($handle))
+    );
 }

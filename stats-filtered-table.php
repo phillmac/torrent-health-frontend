@@ -9,10 +9,9 @@
         http_response_code(500);
         echo 'Error';
     }  else {
-        $torrents = getFiltered($handle, 
-            $_REQUEST['propname'],
-            $_REQUEST['comp'],
-            $_REQUEST['value']
+        $torrents = getFiltered(
+            handleGetFormatted($handle),
+            buildFilters()
         );
 ?>
 
