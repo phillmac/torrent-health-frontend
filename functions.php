@@ -111,7 +111,8 @@ function getFiltered ($handle, string $propname, string $comp, $value) {
         'scraped_date',
         'dht_peers',
         'dht_scraped',
-        'type'
+        'type',
+        'size_bytes'
     ];
 
     if (! array_key_exists($comp, $comparisons)) {
