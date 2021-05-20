@@ -183,7 +183,7 @@ function buildFilters()
         if (count($values) > 1) {
             $filter->value = array_shift($values);
         } else {
-            $filter->values = $values[0];
+            $filter->value = $values[0];
         }
         return array_push($filter_list, $filter);
     }
