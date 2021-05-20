@@ -169,26 +169,25 @@ function buildFilters()
     if (!is_array($values)) {
         $values = [$values];
     }
+    $filter_list = arary();
 
-    return array_map(
-        function ($propname) use($comps, $values) {
-            $filter = new stdClass;
-            $filter->propname = $propname;
+    while ($propname = array_shift($propnames)) {
+        $filter = new stdClass();
+        $filter->propname = $propname;
 
-            if (count($comps) > 1 ) {
-                $filter->comp = array_shift($comps);
-            } else {
-                $filter->comp = $comps[0];
-            }
-            if (count($values) > 1 ) {
-                $filter->value = array_shift($values);
-            } else {
-                $filter->values = $values[0];
-            }
-            return $filter;
-        },
-        $propnames
-    );
+        if (count($comps) > 1) {
+            $filter->comp = array_shift($comps);
+        } else {
+            $filter->comp = $comps[0];
+        }
+        if (count($values) > 1) {
+            $filter->value = array_shift($values);
+        } else {
+            $filter->values = $values[0];
+        }
+        return array_push($filter_list, $filter);
+    }
+    return $filter_list;
 }
 
 function getFiltered($items, $filters)
