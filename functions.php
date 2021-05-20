@@ -88,5 +88,45 @@ function getStale ($handle, $max_age=10800) {
         array_map('formatTorrent', json_decode(stream_get_contents($handle))),
         function($t) {
             return ($t->scraped_date + $max_age) < $now;
-    });
+        }
+    );
+}
+
+function getFiltered ($handle, string $propname, string $comp, $value) {
+    $comparisons = array (
+        '==' => function ($a,$b) {return $a==$b;},
+        '<=' => function ($a,$b) {return $a<=$b;},
+        '>=' => function ($a,$b) {return $a>=$b;},
+        '<' => function ($a,$b) {return $a<$b;},
+        '>' => function ($a,$b) {return $a>$b;},
+        '!=' => function ($a,$b) {return $a!=$b;},
+        '<>' => function ($a,$b) {return $a<>$b;},
+        '<=>' => function ($a,$b) {return $a<=>$b;},
+    );
+
+    $propnames = [
+        'infohash',
+        'seeders',
+        'leechers',
+        'scraped_date',
+        'dht_peers',
+        'dht_scraped'
+    ];
+
+    if (! array_key_exists($comp, $comparisons)) {
+        http_response_code(400);
+        return 'Invalid comparison';
+    }
+
+    if (! in_array($propname, $propnames)) {
+        http_response_code(400);
+        return 'Invalid propertyname';
+    }
+
+    return array_filter (
+        array_map('formatTorrent', json_decode(stream_get_contents($handle))),
+        function($t) {
+            return $comparisons[$comp]($t->{$propname}, $value);
+        }
+    ); 
 }
