@@ -91,7 +91,7 @@ function getStale ($handle, $max_age=10800) {
     );
 }
 
-function getFiltered ($handle, string $propname, string $comp, $value) {
+function getFiltered ($handle, $propname, $comp, $value) {
     $comparisons = array (
         '==' => function ($a,$b) {return $a==$b;},
         '<=' => function ($a,$b) {return $a<=$b;},
