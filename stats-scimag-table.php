@@ -9,12 +9,7 @@
         http_response_code(500);
     }  else {
         $torrents = array_filter(
-            array_map(
-                'formatTorrent',
-                json_decode(
-                    stream_get_contents($handle)
-                )
-            ),
+            handleGetFormatted($handle),
             function($t) {
                 return $t->type == 'scimag';
             }

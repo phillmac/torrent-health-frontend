@@ -12,11 +12,6 @@
         json_encode(array('status' => 'error'));
     }  else {
         echo json_encode(
-            array_map(
-                'formatTorrent',
-                json_decode(
-                    stream_get_contents($handle)
-                )
-            )
+            handleGetFormatted($handle)
         );
     }

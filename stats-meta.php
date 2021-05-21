@@ -12,7 +12,7 @@ if ( !$handle ) {
     http_response_code(500);
     echo 'Error';
 }  else {
-    $torrents = array_map('formatTorrent', json_decode(stream_get_contents($handle)));
+    $torrents = handleGetFormatted($handle);
 
     $stale = array_filter ($torrents, function($t) {
         return ($t->scraped_date + 10800) < time();

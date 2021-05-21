@@ -9,7 +9,7 @@
         http_response_code(500);
         echo 'Error';
     }  else {
-        $torrents = array_map('formatTorrent',json_decode(stream_get_contents($handle)));
+        $torrents = handleGetFormatted($handle);
 ?>
 
 <!DOCTYPE html>
