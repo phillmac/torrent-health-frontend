@@ -1,7 +1,7 @@
 <?php
     require('functions.php');
 
-    $address = upstreamAddress('EVENTS');
+    $address = upstreamAddress('ERRORS');
     $handle = FALSE;
 
     $handle = fopen($address, 'r');
