@@ -9,10 +9,15 @@
         http_response_code(500);
         echo 'Error';
     }  else {
-        $torrents = getFiltered(
-            handleGetFormatted($handle),
-            buildFilters()
-        );
+        try {
+            $torrents = getFiltered(
+                handleGetFormatted($handle),
+                buildFilters()
+            );
+        } catch (FilterException $e) {
+            http_response_code(400);
+            echo $e->getMessage(), "\n";
+        }
 ?>
 
 <!DOCTYPE html>

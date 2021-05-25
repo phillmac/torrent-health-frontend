@@ -137,12 +137,12 @@ function applyFilter($items, $propname, $comp, $value)
 
     if (!array_key_exists($comp, $comparisons)) {
         http_response_code(400);
-        throw new Exception("Invalid comparison");
+        throw new FilterException("Invalid comparison");
     }
 
     if (!in_array($propname, $propnames)) {
         http_response_code(400);
-        throw new Exception("Invalid propertyname");
+        throw new FilterException("Invalid propertyname");
     }
     $compare = $comparisons[$comp];
     return array_filter($items, function ($t) use (
@@ -210,4 +210,10 @@ function handleGetFormatted($handle)
         "formatTorrent",
         json_decode(stream_get_contents($handle))
     );
+}
+
+
+class FilterException extends Exception
+{
+
 }
