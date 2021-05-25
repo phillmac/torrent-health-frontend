@@ -15,13 +15,13 @@
             echo "Error";
             die();
         } else {
-            $tracker_data[$addr_name]  = json_decode(stream_get_contents($handle));
+            $tracker_data[$addr_name]  = json_decode(stream_get_contents($handle), TRUE);
         }
     }
     $trackers_list = array_unique([
         ... $tracker_data['ignore'],
-        ...array_keys(get_object_vars($tracker_data['errors'])),
-        ...array_keys(get_object_vars($tracker_data['events']))
+        ...array_keys($tracker_data['errors']),
+        ...array_keys($tracker_data['events'])
     ]);
 ?>
 <!DOCTYPE html>
@@ -42,8 +42,8 @@
             <tr>
                     <td><?= $t; ?></td>
                     <td><?= in_array($t, $tracker_data['ignore']) ? 'True': 'False'; ?></td>
-                    <td><?= count($tracker_data['errors']->$t); ?></td>
-                    <td><?= count($tracker_data['events']->$t); ?></td>
+                    <td><?= count($tracker_data['errors'][$t]); ?></td>
+                    <td><?= count($tracker_data['events'][$t]); ?></td>
                 </tr>
         <?php endforeach; ?>
         </tbody>
