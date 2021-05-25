@@ -7,7 +7,7 @@
                 <th>Last Updated</th>
             </thead>
             <tbody>
-            <?php foreach($torrent->trackerData as $t ->$stats): ?>
+            <?php foreach($torrent->trackerData as $t=>$stats): ?>
                 <tr>
                     <td><?= $t; ?></td>
                     <td><?= $stats->complete ?></td>
