@@ -14,7 +14,7 @@
         $torrents = array_filter(
             handleGetFormatted($handle),
             function($t) {
-                return  $t->type == 'scimag' && $t->seeders < 3 ;
+                return  $t->type == 'scimag' && $t->seeders < 10 ;
             }
     );
 
@@ -26,7 +26,7 @@
     <body>
         <h1>Torrent Health Tracker</h1>
         <h2>Updated: <?php echo (new \DateTime())->format('Y-m-d H:i:s e'); ?></h2>
-        <h2>Seeders Needed : Less than 3 seeders available</h2>
+        <h2>Seeders Needed : Less than 10 seeders available</h2>
         <?php require('table.php'); ?>
     </body>
 </html>
