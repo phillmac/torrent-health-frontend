@@ -41,7 +41,7 @@
         <?php foreach($trackers_list as $t): ?>
             <tr>
                     <td><?= $t; ?></td>
-                    <td><?= in_array($t, $tracker_data['ignore']); ?></td>
+                    <td><?= in_array($t, $tracker_data['ignore']? 'True': 'False'); ?></td>
                     <td><?= count($tracker_data['errors']->$t); ?></td>
                     <td><?= count($tracker_data['events']->$t); ?></td>
                 </tr>
