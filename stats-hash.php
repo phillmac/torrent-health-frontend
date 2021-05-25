@@ -4,8 +4,8 @@
     $address = upstreamAddress('HASH');
     $handle = FALSE;
 
-    if (isset($_GET['hash'])) {
-        $handle = jsonGet($address, json_encode(array('hash' => $_GET['hash'])));
+    if (isset($_REQUEST['hash'])) {
+        $handle = jsonGet($address, json_encode(array('hash' => $_REQUEST['hash'])));
     }
     else {
         $params = json_decode(file_get_contents('php://input'), true);
@@ -13,6 +13,8 @@
             $handle = jsonGet($address, json_encode(array('hash' => $params['hash'])));
         }
     }
+    
+    header("Access-Control-Allow-Origin: *");
     header('Content-Type: application/json; charset=utf-8');
 
     if ( !$handle ) {
