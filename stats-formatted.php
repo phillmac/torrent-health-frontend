@@ -8,11 +8,9 @@
     header("Access-Control-Allow-Origin: *");
     header('Content-Type: application/json; charset=utf-8');
 
-    if ( !$handle ) {
-        http_response_code(500);
-        json_encode(array('status' => 'error'));
-    }  else {
-        echo json_encode(
-            handleGetFormatted($handle)
-        );
-    }
+    validateHandle($handle);
+
+    echo json_encode(
+        handleGetFormatted($handle)
+    );
+
