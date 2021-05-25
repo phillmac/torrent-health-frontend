@@ -1,4 +1,4 @@
 <?php
     require('functions.php');
 
-    proxyUpstream();
+    proxyUpstream(null);
