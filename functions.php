@@ -1,8 +1,9 @@
 <?php
 require "vendor/autoload.php";
+require "exceptions.php";
 
 use Symfony\Component\Dotenv\Dotenv;
-use \Exception;
+use Exceptions\FilterException as FilterException;
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__ . "/.env");
@@ -209,10 +210,4 @@ function handleGetFormatted($handle)
         "formatTorrent",
         json_decode(stream_get_contents($handle))
     );
-}
-
-
-class FilterException extends \Exception
-{
-
 }
