@@ -2,6 +2,7 @@
 require "vendor/autoload.php";
 
 use Symfony\Component\Dotenv\Dotenv;
+use \Exception as Exception;
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__ . "/.env");
