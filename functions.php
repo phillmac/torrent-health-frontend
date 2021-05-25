@@ -136,12 +136,10 @@ function applyFilter($items, $propname, $comp, $value)
     ];
 
     if (!array_key_exists($comp, $comparisons)) {
-        http_response_code(400);
         throw new FilterException("Invalid comparison");
     }
 
     if (!in_array($propname, $propnames)) {
-        http_response_code(400);
         throw new FilterException("Invalid propertyname");
     }
     $compare = $comparisons[$comp];
