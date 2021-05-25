@@ -6,7 +6,7 @@
 
     if (! isset($_REQUEST['hash'])) {
         http_response_code(400);
-        json_encode(
+        echo json_encode(
             array(
                 'status' => 'error',
                 'reason' => "Missing 'hash' param"
@@ -23,7 +23,7 @@
 
     if (! $handle) {
         http_response_code(500);
-        json_encode(
+        echo json_encode(
             array(
                 'status' => 'error',
                 'reason' => 'Invalid upstream handle'
