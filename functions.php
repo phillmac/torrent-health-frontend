@@ -2,7 +2,7 @@
 require "vendor/autoload.php";
 
 use Symfony\Component\Dotenv\Dotenv;
-use \Exception as Exception;
+use \Exception;
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__ . "/.env");
@@ -212,7 +212,7 @@ function handleGetFormatted($handle)
 }
 
 
-class FilterException extends Exception
+class FilterException extends \Exception
 {
 
 }

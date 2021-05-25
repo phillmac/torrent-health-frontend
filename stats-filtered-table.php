@@ -1,5 +1,7 @@
 <?php
+    use \FilterException;
     require('functions.php');
+    
     $address = upstreamAddress();
     $handle = FALSE;
 
