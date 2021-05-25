@@ -1,7 +1,7 @@
 <?php
     require('functions.php');
     
-    use \Exceptions\FilterException as FilterException;
+    use Exceptions\FilterException as FilterException;
 
     $address = upstreamAddress();
     $handle = FALSE;

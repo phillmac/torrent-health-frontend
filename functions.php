@@ -3,7 +3,7 @@ require "vendor/autoload.php";
 require "exceptions.php";
 
 use Symfony\Component\Dotenv\Dotenv;
-use \Exceptions\FilterException as FilterException;
+use Exceptions\FilterException as FilterException;
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__ . "/.env");
