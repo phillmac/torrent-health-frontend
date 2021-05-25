@@ -3,7 +3,7 @@
                 <th>Info Hash</th>
                 <th data-sort-method="number" data-sort-default="">Name</th>
                 <th>Link</th>
-                <th>Size</th>
+                <th data-sort-method="filesize">Size</th>
                 <th data-sort-method="number">Seeders</th>
                 <th data-sort-method="number">Leechers</th>
                 <th data-sort-method="number">Scraped</th>
