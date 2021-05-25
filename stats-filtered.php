@@ -17,6 +17,7 @@
             )
         );
         die();
+    }
     try {
         echo json_encode(
             getFiltered(
