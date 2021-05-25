@@ -20,6 +20,7 @@
         } catch (FilterException $e) {
             http_response_code(400);
             echo $e->getMessage(), "\n";
+            die();
         }
 ?>
 
