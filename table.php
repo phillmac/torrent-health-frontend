@@ -15,7 +15,9 @@
             <tbody>
             <?php foreach($torrents as $t): ?>
                 <tr>
-                    <td><?php echo $t->infohash; ?></td>
+                    <td>
+                        <a href="stats-hash-table.php?hash=<?= $t->infohash; ?>"><?= $t->infohash; ?></a>
+                    </td>
                     <td><?php echo $t->name; ?></td>
                     <td><?php echo $t->link; ?></td>
                     <td><?php echo formatBytes($t->size_bytes); ?></td>
