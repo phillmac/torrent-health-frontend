@@ -1,7 +1,7 @@
 <?php
     require('functions.php');
     
-    use Exceptions\FilterException;
+    use \Exceptions\FilterException as FilterException;
 
     $address = upstreamAddress();
     $handle = FALSE;
@@ -17,7 +17,7 @@
                 handleGetFormatted($handle),
                 buildFilters()
             );
-        } catch (Exceptions\FilterException $e) {
+        } catch (FilterException $e) {
             http_response_code(400);
             echo $e->getMessage(), "\n";
         }
