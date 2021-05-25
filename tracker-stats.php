@@ -20,8 +20,9 @@
     }
     $trackers_list = array_unique([
         ... $tracker_data['ignore'],
-        ...array_keys($tracker_data['errors']),
-        ...array_keys($tracker_data['events'])]);
+        ...array_keys(get_object_vars($tracker_data['errors'])),
+        ...array_keys(get_object_vars($tracker_data['events']))
+    ]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,8 +42,8 @@
             <tr>
                     <td><?= $t; ?></td>
                     <td><?= in_array($t, $tracker_data['ignore']); ?></td>
-                    <td><?= count($tracker_data['errors'][$t]); ?></td>
-                    <td><?= count($tracker_data['events'][$t]); ?></td>
+                    <td><?= count($tracker_data['errors']->$t); ?></td>
+                    <td><?= count($tracker_data['events']->$t); ?></td>
                 </tr>
         <?php endforeach; ?>
         </tbody>
