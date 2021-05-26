@@ -56,7 +56,9 @@
         print_r(
             array (
                 '$test' => $test,
-                'count' => count([...$test])
+                'count' => count($test),
+                'is_array' => is_array($test),
+                'is_object' => is_object($test)
             )    
         );
        ?>
