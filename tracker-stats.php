@@ -58,10 +58,10 @@
                 '$test' => $test,
                 'count' => count($test),
                 'is_array' => is_array($test) ? 'true' : 'false',
-                'is_object' => is_object($test) ? 'true' : 'false',
-                'var_dump' => var_dump($test)
+                'is_object' => is_object($test) ? 'true' : 'false'
             )    
         );
+        var_dump($test)
        ?>
     -->
 </html>
