@@ -50,6 +50,6 @@
         </table>
     </body>
     <!--
-       <?php print_r($tracker_data, TRUE); ?>
+       <?php print_r($tracker_data); ?>
     -->
 </html>
