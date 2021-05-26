@@ -27,6 +27,16 @@
                 Array.from(document.querySelectorAll("table")).forEach(function(t) {
                     new Tablesort(t);
                 })
+                $('js-is-queued').each(async $el => {
+                    const infoHash = $el.data('infoHash')
+                    $el.text(
+                        (
+                            await fetch('queue.php?hash=', {data})
+                                .then(resp =>resp.json())
+                                .then(queue => queue?.includes(infoHash))
+                        ) ? 'True' : 'False'
+                    )
+                })
             });
         </script>
     </head>

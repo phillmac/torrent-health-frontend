@@ -31,6 +31,7 @@
             <p>Infohash: <?= $torrent->_id; ?></p>
             <p>Name: <?= $torrent->name; ?></p>
             <p>Link: <?= $torrent->link; ?></p>
+            <p>Queued:<span class="js-is-queued" data-info-hash="<?= $torrent->_id; ?>"></span></p>
             <p>Created: <?= $torrent->created_unix; ?></p>
             <p>Size: <?= formatBytes($torrent->size_bytes);  ?></p>
             <p>Type: <?= $torrent->type ?></p>
