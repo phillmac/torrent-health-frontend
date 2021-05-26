@@ -50,6 +50,15 @@
         </table>
     </body>
     <!--
-       <?php print_r($tracker_data); ?>
+        <?php 
+        //print_r($tracker_data);
+        $test = $tracker_data['errors']['udp://tracker.openbittorrent.com:80'];
+        print_r(
+            array (
+                '$test' => $test,
+                'count' => count($test)
+            )    
+        );
+       ?>
     -->
 </html>
