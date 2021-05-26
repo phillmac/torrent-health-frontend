@@ -32,7 +32,7 @@
                     const infoHash = $el.data('infoHash')
                     $el.text(
                         (
-                            await fetch('queue.php?hash=', {data})
+                            await fetch('queue.php')
                                 .then(resp =>resp.json())
                                 .then(queue => queue?.includes(infoHash))
                         ) ? 'True' : 'False'
