@@ -27,7 +27,8 @@
                 Array.from(document.querySelectorAll("table")).forEach(function(t) {
                     new Tablesort(t);
                 })
-                $('.js-is-queued').each(async $el => {
+                $('.js-is-queued').each(async function () {
+                    const $el = $(this)
                     const infoHash = $el.data('infoHash')
                     $el.text(
                         (
