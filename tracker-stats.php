@@ -57,8 +57,8 @@
             array (
                 '$test' => $test,
                 'count' => count($test),
-                'is_array' => is_array($test),
-                'is_object' => is_object($test)
+                'is_array' => is_array($test) ? 'true' : 'false',
+                'is_object' => is_object($test) ? 'true' : 'false'
             )    
         );
        ?>
