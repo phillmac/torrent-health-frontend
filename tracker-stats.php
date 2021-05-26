@@ -49,19 +49,4 @@
         </tbody>
         </table>
     </body>
-    <!--
-        <?php 
-        //print_r($tracker_data);
-        $test = $tracker_data['errors']['udp://tracker.openbittorrent.com:80'];
-        print_r(
-            array (
-                '$test' => $test,
-                'count' => count($test),
-                'is_array' => is_array($test) ? 'true' : 'false',
-                'is_object' => is_object($test) ? 'true' : 'false'
-            )    
-        );
-        var_dump($test)
-       ?>
-    -->
 </html>
