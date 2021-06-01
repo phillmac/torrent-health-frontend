@@ -21,16 +21,16 @@
                     <td>
                         <a href="stats-hash-table.php?hash=<?= $t->infohash; ?>"><?= $t->infohash; ?></a>
                     </td>
-                    <td><?= echo $t->name; ?></td>
-                    <td><?= echo $t->link; ?></td>
-                    <td><?= echo formatBytes($t->size_bytes); ?></td>
-                    <td><?= echo $t->seeders ?></td>
-                    <td><?= echo $t->leechers ?></td>
-                    <td><?= echo $t->scraped_date ?></td>
-                    <td><?= echo $t->dht_peers; ?></td>
-                    <td><?= echo $t->dht_scraped; ?></td>
-                    <td><?= echo $t->type; ?></td>
-                    <td><?= echo secondsToTime(time() - $t->scraped_date ); ?></td>
+                    <td><?=  $t->name; ?></td>
+                    <td><?=  $t->link; ?></td>
+                    <td><?=  formatBytes($t->size_bytes); ?></td>
+                    <td><?=  $t->seeders ?></td>
+                    <td><?=  $t->leechers ?></td>
+                    <td><?=  $t->scraped_date ?></td>
+                    <td><?=  $t->dht_peers; ?></td>
+                    <td><?=  $t->dht_scraped; ?></td>
+                    <td><?=  $t->type; ?></td>
+                    <td><?=  secondsToTime(time() - $t->scraped_date ); ?></td>
 
 
 
