@@ -13,9 +13,8 @@ if ( !$handle ) {
     echo 'Error';
 }  else {
     $torrents = handleGetFormatted($handle);
-    $now = time();
     $stale = array_filter ($torrents, function($t) {
-        return ($t->scraped_date + 10800) < $now;
+        return ($t->scraped_date + 10800) < time();
     });
     $now = time();
     $ages = array_map(function($t) {

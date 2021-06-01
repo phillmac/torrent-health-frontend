@@ -118,11 +118,10 @@ function jsonGet($address, $data)
 
 function getStale($handle, $max_age = 10800)
 {
-    $now = time();
     return array_filter(
         array_map("formatTorrent", json_decode(stream_get_contents($handle))),
         function ($t) {
-            return ($t->scraped_date + 10800) < $now;
+            return ($t->scraped_date + 10800) < time();
         }
     );
 }
