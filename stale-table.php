@@ -8,7 +8,7 @@
     if ( !$handle ) {
         http_response_code(500);
         echo 'Error';
-        die()
+        die();
     }
 
     $torrents = getStale($handle);
