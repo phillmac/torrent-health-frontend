@@ -1,3 +1,6 @@
+        <h3>
+        Count: <?= count($torrents); ?>
+        </h3>
         <table>
             <thead>
                 <th>Info Hash</th>
@@ -18,16 +21,16 @@
                     <td>
                         <a href="stats-hash-table.php?hash=<?= $t->infohash; ?>"><?= $t->infohash; ?></a>
                     </td>
-                    <td><?php echo $t->name; ?></td>
-                    <td><?php echo $t->link; ?></td>
-                    <td><?php echo formatBytes($t->size_bytes); ?></td>
-                    <td><?php echo $t->seeders ?></td>
-                    <td><?php echo $t->leechers ?></td>
-                    <td><?php echo $t->scraped_date ?></td>
-                    <td><?php echo $t->dht_peers; ?></td>
-                    <td><?php echo $t->dht_scraped; ?></td>
-                    <td><?php echo $t->type; ?></td>
-                    <td><?php echo secondsToTime(time() - $t->scraped_date ); ?></td>
+                    <td><?= echo $t->name; ?></td>
+                    <td><?= echo $t->link; ?></td>
+                    <td><?= echo formatBytes($t->size_bytes); ?></td>
+                    <td><?= echo $t->seeders ?></td>
+                    <td><?= echo $t->leechers ?></td>
+                    <td><?= echo $t->scraped_date ?></td>
+                    <td><?= echo $t->dht_peers; ?></td>
+                    <td><?= echo $t->dht_scraped; ?></td>
+                    <td><?= echo $t->type; ?></td>
+                    <td><?= echo secondsToTime(time() - $t->scraped_date ); ?></td>
 
 
 
