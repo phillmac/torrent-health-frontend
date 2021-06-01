@@ -8,8 +8,10 @@
     if ( !$handle ) {
         http_response_code(500);
         echo 'Error';
-    }  else {
-        $torrents = getStale($handle);
+        die()
+    }
+
+    $torrents = getStale($handle);
 ?>
 
 <!DOCTYPE html>
@@ -21,13 +23,3 @@
         <?php require('table.php'); ?>
     </body>
 </html>
-
-<?php
-    }
-?>
-
-
-
-
-
-
