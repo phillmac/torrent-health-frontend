@@ -114,7 +114,7 @@ function formatTorrentAge($t)
     $t->infohash = $t->_id;
     $t->oldest = $oldest;
     $t->newest = $newest;
-    $t->average = array_sum($tracker_ages / count($tracker_ages));
+    $t->average = array_sum($tracker_ages) / count($tracker_ages);
     $t->percentile_age = intval(Descriptive::percentile($tracker_ages, 95));
     unset($t->_id);
     unset($t->trackers);
