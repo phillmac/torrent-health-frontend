@@ -4,6 +4,8 @@ require "exceptions.php";
 
 use Symfony\Component\Dotenv\Dotenv;
 use Exceptions\FilterException as FilterException;
+use MathPHP\Statistics\Descriptive;
+
 
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__ . "/.env");
@@ -85,6 +87,35 @@ function formatTorrent($t)
     $t->scraped_date = $scraped_date;
     $t->dht_peers = $t->dhtData->peers;
     $t->dht_scraped = $t->dhtData->scraped_date;
+    unset($t->_id);
+    unset($t->trackers);
+    unset($t->trackerData);
+    unset($t->dhtData);
+    return $t;
+}
+
+
+function formatTorrentAge($t)
+{
+    $oldest = -1;
+    $newest = -1;
+    $tracker_ages = [];
+    foreach ($t->trackerData as $data) {
+        if ($data->scraped_date > time() - 86400 * 100) {
+            array_push($tracker_ages, $data->scraped_date);
+            if ($oldest > $data->scraped_date) {
+                $oldest = $data->scraped_date;
+            }
+            if ($newest < $data->scraped_date) {
+                $newest = $data->scraped_date;
+            }
+        }
+    }
+    $t->infohash = $t->_id;
+    $t->oldest = $oldest;
+    $t->newest = $newest;
+    $t->average = array_sum($tracker_ages / count($tracker_ages));
+    $t->percentile_age = intval(Descriptive::percentile($tracker_ages, 95));
     unset($t->_id);
     unset($t->trackers);
     unset($t->trackerData);
@@ -238,6 +269,14 @@ function handleGetFormatted($handle)
 {
     return array_map(
         "formatTorrent",
+        json_decode(stream_get_contents($handle))
+    );
+}
+
+function handleGetFormattedAge($handle)
+{
+    return array_map(
+        "formatTorrentAge",
         json_decode(stream_get_contents($handle))
     );
 }
