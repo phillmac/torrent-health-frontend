@@ -103,7 +103,7 @@ function formatTorrentAge($t)
     foreach ($t->trackerData as $data) {
         if ($data->scraped_date > time() - 86400 * 100) {
             array_push($tracker_ages, $data->scraped_date);
-            if ($oldest > $data->scraped_date) {
+            if ($oldest > $data->scraped_date or $oldest == -1) {
                 $oldest = $data->scraped_date;
             }
             if ($newest < $data->scraped_date) {
