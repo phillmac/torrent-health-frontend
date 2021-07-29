@@ -120,6 +120,12 @@ function formatTorrentAge($t)
     unset($t->trackers);
     unset($t->trackerData);
     unset($t->dhtData);
+    unset($t->link);
+    unset($t->created_unix);
+    unset($t->size_bytes);
+    unset($t->type);
+
+
     return $t;
 }
 
