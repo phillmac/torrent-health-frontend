@@ -70,16 +70,20 @@ function formatTorrent($t)
     $leechers = -1;
     //$completed = -1;
     $scraped_date = -1;
-    foreach ($t->trackerData as $data) {
-        if ($data->scraped_date > time() - 86400 * 100) {
-            if ($data->complete > $seeders) {
-                $seeders = $data->complete;
-                $leechers = $data->incomplete;
-                // $completed = $data->downloaded;
-                $scraped_date = $data->scraped_date;
+
+    if ($t->trackerData) {
+        foreach ($t->trackerData as $data) {
+            if ($data->scraped_date > time() - 86400 * 100) {
+                if ($data->complete > $seeders) {
+                    $seeders = $data->complete;
+                    $leechers = $data->incomplete;
+                    // $completed = $data->downloaded;
+                    $scraped_date = $data->scraped_date;
+                }
             }
         }
     }
+
     $t->infohash = $t->_id;
     $t->seeders = $seeders;
     $t->leechers = $leechers;
@@ -100,22 +104,33 @@ function formatTorrentAge($t)
     $oldest = -1;
     $newest = -1;
     $tracker_ages = [];
-    foreach ($t->trackerData as $data) {
-        if ($data->scraped_date > time() - 86400 * 100) {
-            array_push($tracker_ages, $data->scraped_date);
-            if ($oldest > $data->scraped_date or $oldest == -1) {
-                $oldest = $data->scraped_date;
-            }
-            if ($newest < $data->scraped_date) {
-                $newest = $data->scraped_date;
+
+    if ($t->trackerData) {
+        foreach ($t->trackerData as $data) {
+            if ($data->scraped_date > time() - 86400 * 100) {
+                array_push($tracker_ages, $data->scraped_date);
+                if ($oldest > $data->scraped_date or $oldest == -1) {
+                    $oldest = $data->scraped_date;
+                }
+                if ($newest < $data->scraped_date) {
+                    $newest = $data->scraped_date;
+                }
             }
         }
     }
+
     $t->infohash = $t->_id;
     $t->oldest = $oldest;
     $t->newest = $newest;
-    $t->average = intval(array_sum($tracker_ages) / count($tracker_ages));
-    $t->percentile_age = intval(Descriptive::percentile($tracker_ages, 95));
+
+    if ($tracker_ages) {
+        $t->average = intval(array_sum($tracker_ages) / count($tracker_ages));
+        $t->percentile_age = intval(Descriptive::percentile($tracker_ages, 95));
+    } else {
+        $t->average = -1;
+        $t->percentile_age =-1;
+    }
+
     unset($t->_id);
     unset($t->trackers);
     unset($t->trackerData);
